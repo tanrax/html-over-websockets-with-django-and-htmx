@@ -12,6 +12,6 @@
 - [ ] Buscador de usuarios.
 - [ ] Editar perfil.
 - [ ] Subir foto.
-- [ ] Comentarios.
+- [ ] Añadir comentarios.
 - [ ] Charlas activas en ese momento.
 - [ ] Chatear entre miembros.
