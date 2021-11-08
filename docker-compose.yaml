@@ -1,0 +1,75 @@
+version: '3.1'
+
+services:
+
+  postgresql:
+    image: postgres
+    restart: "no"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: event
+    ports:
+      - 5432:5432
+
+  django:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    entrypoint: /django-launcher.sh
+    volumes:
+      - .:/usr/src/app/
+    environment:
+      DEBUG: "True"
+      ALLOWED_HOSTS: "event.localhost"
+      SECRET_KEY: "my-secret"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "event"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "postgresql"
+      DB_PORT: "5432"
+      DOMAIN: "event.localhost"
+      DOMAIN_URL: "http://event.localhost"
+      STATIC_URL: "/static/"
+      STATIC_ROOT: "static"
+      MEDIA_URL: "/media/"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      EMAIL_HOST: "mailhog"
+      EMAIL_USE_TLS: "False"
+      EMAIL_PORT: "1025"
+      EMAIL_USER: ""
+      EMAIL_PASSWORD: ""
+    expose:
+      - 8000
+    depends_on:
+      - postgresql
+
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - ./Caddyfile:/etc/caddy/Caddyfile
+        - ./../caddy_data:/data
+        - .:/usr/src/app/
+    depends_on:
+      - django
+      
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    expose:
+      - 6379
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: unless-stopped
+    expose:
+        - 1025
+    ports:
+        - 8025:8025
