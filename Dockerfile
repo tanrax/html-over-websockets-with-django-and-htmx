@@ -25,4 +25,3 @@ RUN pip3 install -r requirements.txt
 # launcher
 COPY django-launcher.sh /django-launcher.sh
 RUN chmod +x /django-launcher.sh
-

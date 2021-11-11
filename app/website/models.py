@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
+from tinymce import models as tinymce_models
 
 
 class Profile(AbstractBaseUser):
@@ -7,7 +9,7 @@ class Profile(AbstractBaseUser):
 
     email = models.EmailField("Email", unique=True)
     full_name = models.CharField(
-        max_length=100, verbose_name="Nombre y apellidos", default="Sapps"
+        max_length=100, verbose_name="Full name", default=""
     )
     avatar = models.ImageField(verbose_name="Avatar", upload_to="uploads/avatars/")
 
@@ -51,7 +53,7 @@ class Talk(models.Model):
         related_name="author",
         verbose_name="Autor",
     )
-    image = models.ImageField(verbose_name="Imagen", upload_to="uploads/articles/")
+    image = models.ImageField(verbose_name="Imagen", upload_to="uploads/talks/")
     is_draft = models.BooleanField(default=True, verbose_name="¿Es un borrador?")
     content = tinymce_models.HTMLField(verbose_name="Contenido")
     created_at = models.DateTimeField(auto_now=True, verbose_name="Creado")

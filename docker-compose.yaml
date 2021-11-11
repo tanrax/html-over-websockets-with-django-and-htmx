@@ -1,9 +1,8 @@
-version: '3.1'
 
 services:
 
-  postgresql:
-    image: postgres
+  db:
+    image: postgres:14-alpine
     restart: "no"
     environment:
       POSTGRES_USER: postgres
@@ -22,13 +21,13 @@ services:
       - .:/usr/src/app/
     environment:
       DEBUG: "True"
-      ALLOWED_HOSTS: "event.localhost"
+      ALLOWED_HOSTS: "event.localhost,localhost"
       SECRET_KEY: "my-secret"
       DB_ENGINE: "django.db.backends.postgresql"
       DB_NAME: "event"
       DB_USER: "postgres"
       DB_PASSWORD: "postgres"
-      DB_HOST: "postgresql"
+      DB_HOST: db
       DB_PORT: "5432"
       DOMAIN: "event.localhost"
       DOMAIN_URL: "http://event.localhost"
@@ -42,12 +41,12 @@ services:
       EMAIL_PORT: "1025"
       EMAIL_USER: ""
       EMAIL_PASSWORD: ""
-    expose:
-      - 8000
+    ports:
+      - 8000:8000
     depends_on:
-      - postgresql
+      - db
 
-  caddy:
+  web:
     image: caddy:alpine
     restart: unless-stopped
     ports:
