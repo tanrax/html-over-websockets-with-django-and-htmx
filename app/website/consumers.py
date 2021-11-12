@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from .views import page_talks
+from .views import page_talks, page_about
 
 class WebsiteConsumer(AsyncWebsocketConsumer):
 
@@ -20,7 +20,7 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                "type": "page_talks"
+                "type": "send_page_talks"
             }
         )
 
@@ -30,12 +30,41 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data):
-        pass
+        # Load data
+        data = json.loads(text_data)
+        # Change page
+        if data["action"] == "page":
+            # Talks
+            if data["value"] == "talks":
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        "type": "send_page_talks"
+                    }
+                )
+            # About
+            if data["value"] == "about":
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        "type": "send_page_about"
+                    }
+                )
+
+    # Pages
 
     def _get_talks(self):
         return page_talks()
 
-    async def page_talks(self, event):
+    async def send_page_talks(self, event):
         ''' Send Home page '''
         html = await sync_to_async(self._get_talks)()
+        await self.send(text_data=html)
+
+    def _get_about(self):
+        return page_about()
+
+    async def send_page_about(self, event):
+        ''' Send About page '''
+        html = await sync_to_async(self._get_about)()
         await self.send(text_data=html)

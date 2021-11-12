@@ -24,9 +24,23 @@
                 <li><strong>HTML over WebSockets with htmx</strong></li>
               </ul>
               <ul>
-                  <li><a href="#">Events</a></li>
+                  <li>
+                      {# To page Talks #}
+                      <form hx-ws="send">
+                          <input type="hidden" name="action" value="page">
+                          <input type="hidden" name="value" value="talks">
+                          <a href="#" hx-ws="send" hx-trigger="click">Talks</a>
+                      </form>
+                  </li>
                   <li><a href="#">Profiles</a></li>
-                  <li><a href="#" hx-ws="send" hx-trigger="click">About</a></li>
+                  <li>
+                      {# To page About #}
+                      <form hx-ws="send">
+                          <input type="hidden" name="action" value="page">
+                          <input type="hidden" name="value" value="about">
+                          <a href="#" hx-ws="send" hx-trigger="click">About</a>
+                      </form>
+                  </li>
               </ul>
             </nav>
         </header>
