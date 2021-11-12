@@ -13,6 +13,7 @@ def index(request):
         "DOMAIN": settings.DOMAIN,
     })
 
+
 def page_talks():
     return render_to_string("pages/talks.html", {
         "talks": Talk.objects.order_by("title")[:5]

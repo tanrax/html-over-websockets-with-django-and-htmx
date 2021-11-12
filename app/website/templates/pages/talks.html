@@ -1,9 +1,20 @@
-<main id="page">
+<main id="main">
     {% for talk in talks %}
-    <article>
-      <header>{{ talk.title }}</header>
-      <p></p>
-      <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
-    </article>
+        <a href="#">
+            <article>
+                <header>
+                    <div class="grid">
+                        <p>
+                            <img width="200" src="{{ talk.image.url }}">
+                        </p>
+                        <h2>{{ talk.title }}</h2>
+                    </div>
+                </header>
+                <p>
+                    {{ talk.content|truncatechars:100 }}
+                </p>
+                <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
+            </article>
+        </a>
     {% endfor %}
 </main>

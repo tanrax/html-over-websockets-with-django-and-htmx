@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>htmx demo</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <meta name="author" content="Andros Fenollosa">
     <meta name="generator" content="Django">
@@ -17,7 +17,7 @@
     <script defer src="{% static "js/htmx.min.js" %}"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" hx-ws="connect:ws:{{ DOMAIN }}/ws/pages/{{ room_random }}/">
         <header>
             <nav>
               <ul>
@@ -30,7 +30,7 @@
               </ul>
             </nav>
         </header>
-        <main hx-ws="connect:ws:{{ DOMAIN }}/ws/pages/{{ room_random }}/" id="page"></main>
+        <main id="main"></main>
     </div>
 </body>
 </html>

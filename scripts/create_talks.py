@@ -19,9 +19,7 @@ def run():
             category=Category.objects.order_by("?")[0],
             author=Profile.objects.order_by("?")[0],
             is_draft=False,
-            content="<p>"
-            + "</p><p>".join(fake.paragraph(nb_sentences=randint(5, 10)))
-            + "</p>",
+            content=fake.paragraph(nb_sentences=randint(20, 100)),
         )
         my_talk.save()
 
