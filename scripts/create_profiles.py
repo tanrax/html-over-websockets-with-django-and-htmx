@@ -8,6 +8,7 @@ import time
 from tempfile import NamedTemporaryFile
 from random import randint
 
+
 def run():
     fake = Faker()
 

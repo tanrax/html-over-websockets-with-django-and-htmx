@@ -1,6 +1,7 @@
 from app.website.models import Category
 from faker import Faker
 
+
 def run():
     fake = Faker()
 

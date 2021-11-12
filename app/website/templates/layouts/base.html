@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>htmx demo</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta name="author" content="Andros Fenollosa">
+    <meta name="generator" content="Django">
+    <meta name="description" content="Demo WebSockets over HTML with htmx">
+    <meta property="og:type" content="website">
+    {# Styles #}
+    <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/pico.min.css" %}">
+    {# JavaScript #}
+    <script defer src="{% static "js/htmx.min.js" %}"></script>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

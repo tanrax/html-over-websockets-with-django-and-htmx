@@ -8,17 +8,20 @@ import time
 from tempfile import NamedTemporaryFile
 from random import randint
 
+
 def run():
     fake = Faker()
 
     # 100 talks
-    for title in [fake.unique.sentence(nb_words=10)[0:-1] for i in range(100)]:
+    for title in [fake.unique.sentence(nb_words=5)[0:-1] for i in range(100)]:
         my_talk = Talk(
             title=title,
             category=Category.objects.order_by("?")[0],
             author=Profile.objects.order_by("?")[0],
             is_draft=False,
-            content=fake.text(max_nb_chars=1000),
+            content="<p>"
+            + "</p><p>".join(fake.paragraph(nb_sentences=randint(5, 10)))
+            + "</p>",
         )
         my_talk.save()
 

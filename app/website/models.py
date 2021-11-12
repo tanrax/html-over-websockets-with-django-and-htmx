@@ -8,9 +8,7 @@ class Profile(AbstractBaseUser):
     """User model"""
 
     email = models.EmailField("Email", unique=True)
-    full_name = models.CharField(
-        max_length=100, verbose_name="Full name", default=""
-    )
+    full_name = models.CharField(max_length=100, verbose_name="Full name", default="")
     avatar = models.ImageField(verbose_name="Avatar", upload_to="uploads/avatars/")
 
     USERNAME_FIELD = "email"  # make the user log in with the email
