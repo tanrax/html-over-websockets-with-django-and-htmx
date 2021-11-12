@@ -14,9 +14,13 @@ def index(request):
     })
 
 
-def page_talks():
-    return render_to_string("pages/talks.html", {
-        "talks": Talk.objects.order_by("title")[:5]
+def page_talks(page=1):
+    TALK_PER_PAGE = 5
+    return render_to_string("pages/talks.html",
+                            {
+        "talks": Talk.objects.order_by("title")[:TALK_PER_PAGE * page],
+        "page": page,
+        "next_page": page + 1,
     })
 
 

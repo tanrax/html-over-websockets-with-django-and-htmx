@@ -17,4 +17,13 @@
             </article>
         </a>
     {% endfor %}
+    {# Pagination #}
+    <div class="loading" >
+        <form>
+            <input type="hidden" name="action" value="page">
+            <input type="hidden" name="value" value="talks">
+            <input type="hidden" name="page" value="{{ next_page }}">
+            <p hx-ws="send" hx-trigger="click,revealed">Show more</p>
+        </form>
+    </div>
 </main>

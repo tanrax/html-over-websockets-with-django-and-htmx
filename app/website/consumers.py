@@ -20,7 +20,8 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                "type": "send_page_talks"
+                "type": "send_page_talks",
+                "page": 1,
             }
         )
 
@@ -36,10 +37,14 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         if data["action"] == "page":
             # Talks
             if data["value"] == "talks":
+                page = 1
+                if "page" in data:
+                    page = int(data["page"])
                 await self.channel_layer.group_send(
                     self.room_group_name,
                     {
-                        "type": "send_page_talks"
+                        "type": "send_page_talks",
+                        "page": page,
                     }
                 )
             # About
@@ -53,12 +58,12 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
 
     # Pages
 
-    def _get_talks(self):
-        return page_talks()
+    def _get_talks(self, page):
+        return page_talks(page=page)
 
     async def send_page_talks(self, event):
         ''' Send Home page '''
-        html = await sync_to_async(self._get_talks)()
+        html = await sync_to_async(self._get_talks)(event["page"])
         await self.send(text_data=html)
 
     def _get_about(self):
