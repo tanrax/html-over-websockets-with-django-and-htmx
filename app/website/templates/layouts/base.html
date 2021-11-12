@@ -17,6 +17,20 @@
     <script defer src="{% static "js/htmx.min.js" %}"></script>
 </head>
 <body>
-    {% block content %}{% endblock %}
+    <div class="container">
+        <header>
+            <nav>
+              <ul>
+                <li><strong>HTML over WebSockets with htmx</strong></li>
+              </ul>
+              <ul>
+                  <li><a href="#">Events</a></li>
+                  <li><a href="#">Profiles</a></li>
+                  <li><a href="#">About</a></lif>
+              </ul>
+            </nav>
+        </header>
+        <main hx-ws="connect:ws:{{ DOMAIN }}/ws/pages/{{ room_random }}/" id="page"></main>
+    </div>
 </body>
 </html>

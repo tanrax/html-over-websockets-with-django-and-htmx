@@ -1,0 +1,9 @@
+<main id="page">
+    {% for talk in talks %}
+    <article>
+      <header>{{ talk.title }}</header>
+      <p></p>
+      <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
+    </article>
+    {% endfor %}
+</main>
