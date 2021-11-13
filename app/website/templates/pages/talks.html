@@ -1,21 +1,26 @@
 <main id="main">
     {% for talk in talks %}
-        <a href="#">
-            <article>
-                <header>
-                    <div class="grid">
-                        <p>
-                            <img width="200" src="{{ talk.image.url }}">
-                        </p>
-                        <h2>{{ talk.title }}</h2>
-                    </div>
-                </header>
-                <p>
-                    {{ talk.content|truncatechars:150 }}
-                </p>
-                <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
-            </article>
-        </a>
+        <form>
+            <input type="hidden" name="action" value="page">
+            <input type="hidden" name="value" value="single-talk">
+            <input type="hidden" name="id" value="{{ talk.id }}">
+            <a href="#" hx-ws="send" hx-trigger="click">
+                <article>
+                    <header>
+                        <div class="grid">
+                            <p>
+                                <img width="200" src="{{ talk.image.url }}">
+                            </p>
+                            <h2>{{ talk.title }}</h2>
+                        </div>
+                    </header>
+                    <p>
+                        {{ talk.content|truncatechars:150 }}
+                    </p>
+                    <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
+                </article>
+            </a>
+        </form>
     {% endfor %}
     {# Pagination #}
     <div class="loading" >

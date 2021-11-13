@@ -1,0 +1,22 @@
+<main id="main">
+    <article>
+        <header>
+            <p>
+                <img width="200" src="{{ talk.image.url }}">
+            </p>
+            <h2>{{ talk.title }}</h2>
+        </header>
+        <p>
+            {{ talk.content }}
+        </p>
+        <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
+    </article>
+    <p>
+        <form>
+            <input type="hidden" name="action" value="page">
+            <input type="hidden" name="value" value="talks">
+            <input type="hidden" name="page" value="1">
+            <a href="#" hx-ws="send" hx-trigger="click">Back</a>
+        </form>
+    </p>
+</main>

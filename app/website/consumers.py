@@ -1,12 +1,12 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from .views import page_talks, page_about
+from .views import page_talks, page_about, page_single_talk
+
 
 class WebsiteConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
-        '''Connect user'''
+        """Connect user"""
         self.room_name = self.scope["url_route"]["kwargs"]["room_id"]
         self.room_group_name = "root_%s" % self.room_name
 
@@ -22,11 +22,11 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
             {
                 "type": "send_page_talks",
                 "page": 1,
-            }
+            },
         )
 
     async def disconnect(self, close_code):
-        ''' Cliente se desconecta '''
+        """Cliente se desconecta"""
         # Leave room group
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
@@ -45,15 +45,20 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
                     {
                         "type": "send_page_talks",
                         "page": page,
+                    },
+                )
+            # Single talk
+            if data["value"] == "single-talk":
+                await self.channel_layer.group_send(
+                    self.room_group_name, {
+                        "type": "send_page_single_talk",
+                        "id":  data["id"],
                     }
                 )
             # About
             if data["value"] == "about":
                 await self.channel_layer.group_send(
-                    self.room_group_name,
-                    {
-                        "type": "send_page_about"
-                    }
+                    self.room_group_name, {"type": "send_page_about"}
                 )
 
     # Pages
@@ -62,14 +67,22 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         return page_talks(page=page)
 
     async def send_page_talks(self, event):
-        ''' Send Home page '''
+        """Send Home page"""
         html = await sync_to_async(self._get_talks)(event["page"])
+        await self.send(text_data=html)
+
+    def _get_single_talk(self, id):
+        return page_single_talk(id)
+
+    async def send_page_single_talk(self, event):
+        """Send Single talk page"""
+        html = await sync_to_async(self._get_single_talk)(event["id"])
         await self.send(text_data=html)
 
     def _get_about(self):
         return page_about()
 
     async def send_page_about(self, event):
-        ''' Send About page '''
+        """Send About page"""
         html = await sync_to_async(self._get_about)()
         await self.send(text_data=html)

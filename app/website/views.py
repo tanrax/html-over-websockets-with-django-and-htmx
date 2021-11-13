@@ -8,20 +8,35 @@ from asgiref.sync import sync_to_async
 
 def index(request):
     """Render layout page"""
-    return render(request, "layouts/base.html", {
-        "room_random": randint(1000000, 9999999),
-        "DOMAIN": settings.DOMAIN,
-    })
+    return render(
+        request,
+        "layouts/base.html",
+        {
+            "room_random": randint(1000000, 9999999),
+            "DOMAIN": settings.DOMAIN,
+        },
+    )
 
 
 def page_talks(page=1):
     TALK_PER_PAGE = 5
-    return render_to_string("pages/talks.html",
-                            {
-        "talks": Talk.objects.order_by("title")[:TALK_PER_PAGE * page],
-        "page": page,
-        "next_page": page + 1,
-    })
+    return render_to_string(
+        "pages/talks.html",
+        {
+            "talks": Talk.objects.order_by("title")[: TALK_PER_PAGE * page],
+            "page": page,
+            "next_page": page + 1,
+        },
+    )
+
+
+def page_single_talk(id):
+    return render_to_string(
+        "pages/talk-single.html",
+        {
+            "talk": Talk.objects.get(id=id),
+        },
+    )
 
 
 def page_about():
