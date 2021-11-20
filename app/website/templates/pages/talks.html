@@ -1,5 +1,25 @@
 {% load slippers %}
 <main id="main" data-scroll-to-top="true">
+
+    {# Search #}
+    <form>
+        <input type="hidden" name="action" value="page">
+        <input type="hidden" name="value" value="search-talks">
+        <label>
+            <input
+                    autofocus="autofocus"
+                    onfocus="const miVal = this.value; this.value= ''; this.value = miVal"
+                    type="search"
+                    name="search"
+                    hx-ws="send"
+                    hx-trigger="keyup changed delay:1000ms"
+                    value="{{ search }}"
+            >
+        </label>
+    </form>
+    {# End search #}
+
+    {# List talks #}
     {% for talk in talks %}
         <form>
             <input type="hidden" name="action" value="page">
@@ -23,9 +43,15 @@
             </a>
         </form>
     {% endfor %}
-    {# Pagination #}
-    <div class="loading" >
-        <p>Page {{ page }}</p>
-        {% #link text="Next page" action="page" value="talks" page=next_page %}{% /link %}
-    </div>
+    {# End List talks #}
+
+    {# Paginator #}
+    {% if not search %}
+        <div class="loading" >
+            <p>Page {{ page }}</p>
+            {% #link text="Next page" action="page" value="talks" page=next_page %}{% /link %}
+        </div>
+    {% endif %}
+    {# End Paginator #}
+
 </main>

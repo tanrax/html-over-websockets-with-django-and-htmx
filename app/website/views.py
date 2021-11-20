@@ -41,3 +41,15 @@ def page_single_talk(id):
 
 def page_about():
     return render_to_string("pages/about.html", {})
+
+
+def page_results(search):
+    return render_to_string(
+        "pages/talks.html",
+        {
+            "talks": Talk.objects.filter(
+                title__icontains=search.lower()
+                                         ).order_by("title"),
+            "search": search,
+        },
+    )
