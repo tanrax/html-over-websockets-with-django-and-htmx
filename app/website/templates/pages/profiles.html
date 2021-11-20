@@ -1,0 +1,28 @@
+{% load static %}
+<main id="main" data-scroll-to-top="true">
+    {# List Profiles #}
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
+        {% for profile in profiles %}
+            <article style="max-width: 12rem">
+                <header>
+                    <h2>
+                          {{ profile.full_name }}
+                    </h2>
+                    <p>
+                        <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}">
+                    </p>
+                </header>
+                <h3>Talks</h3>
+                <ul>
+                    {% for talk in profile.talk_profile_set.all %}
+                        <li>
+                            {{ talk.title }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <footer>Email: {{ profile.email }}</footer>
+            </article>
+        {% endfor %}
+    </div>
+    {# End List talks #}
+</main>

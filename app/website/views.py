@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from random import randint
 from django.conf import settings
-from .models import Talk
+from .models import Talk, Profile
 from asgiref.sync import sync_to_async
 
 
@@ -20,10 +20,12 @@ def index(request):
 
 def page_talks(page=1):
     TALK_PER_PAGE = 5
+    START = TALK_PER_PAGE * (page - 1)
+    END = TALK_PER_PAGE * page
     return render_to_string(
         "pages/talks.html",
         {
-            "talks": Talk.objects.order_by("title")[: TALK_PER_PAGE * page],
+            "talks": Talk.objects.order_by("title")[START:END],
             "page": page,
             "next_page": page + 1,
         },
@@ -37,6 +39,15 @@ def page_single_talk(id):
             "talk": Talk.objects.get(id=id),
         },
     )
+
+def page_profiles():
+    return render_to_string(
+        "pages/profiles.html",
+        {
+            "profiles": Profile.objects.order_by("full_name"),
+        },
+    )
+
 
 
 def page_about():

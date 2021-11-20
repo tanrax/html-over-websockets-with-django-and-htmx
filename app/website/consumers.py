@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from .views import page_talks, page_about, page_single_talk, page_results
+from .views import page_talks, page_about, page_single_talk, page_results, page_profiles
 
 
 class WebsiteConsumer(AsyncWebsocketConsumer):
@@ -55,6 +55,12 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
                         "id":  data["id"],
                     }
                 )
+            # Profiles
+            if data["value"] == "profiles":
+                await self.channel_layer.group_send(
+                    self.room_group_name, {"type": "send_page_profiles"}
+                )
+
             # About
             if data["value"] == "about":
                 await self.channel_layer.group_send(
@@ -72,7 +78,7 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
 
     # Pages
 
-    def _get_talks(self, page):
+    def _get_talks(self, page=1):
         return page_talks(page=page)
 
     async def send_page_talks(self, event):
@@ -88,6 +94,14 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
         html = await sync_to_async(self._get_single_talk)(event["id"])
         await self.send(text_data=html)
 
+    def _get_profiles(self):
+        return page_profiles()
+
+    async def send_page_profiles(self, event):
+        """Send Profiles page"""
+        html = await sync_to_async(self._get_profiles)()
+        await self.send(text_data=html)
+
     def _get_about(self):
         return page_about()
 
@@ -101,9 +115,8 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
 
     async def send_page_search(self, event):
         """Send results talks"""
-        print(event)
         if event["search"] != "":
             html = await sync_to_async(self._get_results)(event["search"])
         else:
-            html = await sync_to_async(self._get_talks)(event["page"])
+            html = await sync_to_async(self._get_talks)()
         await self.send(text_data=html)

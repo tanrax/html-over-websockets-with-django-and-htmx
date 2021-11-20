@@ -48,7 +48,7 @@ class Talk(models.Model):
         Profile,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="author",
+        related_name="talk_profile",
         verbose_name="Autor",
     )
     image = models.ImageField(verbose_name="Imagen", upload_to="uploads/talks/")
