@@ -1,4 +1,5 @@
-<main id="main">
+{% load slippers %}
+<main id="main" data-scroll-to-top="true">
     <article>
         <header>
             <p>
@@ -12,11 +13,6 @@
         <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
     </article>
     <p>
-        <form>
-            <input type="hidden" name="action" value="page">
-            <input type="hidden" name="value" value="talks">
-            <input type="hidden" name="page" value="1">
-            <a href="#" hx-ws="send" hx-trigger="click">Back</a>
-        </form>
+        {% #link text="Back" action="page" value="talks" page=1 %}{% /link %}
     </p>
 </main>

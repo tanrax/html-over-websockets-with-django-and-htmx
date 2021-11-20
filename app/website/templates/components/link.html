@@ -1,0 +1,11 @@
+<form>
+    {# Primary data #}
+    <input type="hidden" name="action" value="{{ action }}">
+    <input type="hidden" name="value" value="{{ value }}">
+    {# Secondary data #}
+    {% if page %}
+        <input type="hidden" name="page" value="{{ page }}">
+    {% endif %}
+    {# Button #}
+    <button type="button" hx-ws="send" hx-trigger="click">{{ text }}</button>
+</form>
