@@ -44,10 +44,9 @@ def page_profiles():
     return render_to_string(
         "pages/profiles.html",
         {
-            "profiles": Profile.objects.order_by("full_name"),
+            "profiles": Profile.objects.filter(talkspeaker__isnull=False).order_by("full_name").distinct().all(),
         },
     )
-
 
 
 def page_about():

@@ -9,12 +9,12 @@
                           {{ profile.full_name }}
                     </h2>
                     <p>
-                        <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}">
+                        {# <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}"> #}
                     </p>
                 </header>
                 <h3>Talks</h3>
                 <ul>
-                    {% for talk in profile.talk_profile_set.all %}
+                    {% for talk in profile.talkspeaker.all %}
                         <li>
                             {{ talk.title }}
                         </li>

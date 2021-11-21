@@ -1,4 +1,4 @@
-<form>
+<form class="link">
     {# Primary data #}
     <input type="hidden" name="action" value="{{ action }}">
     <input type="hidden" name="value" value="{{ value }}">
@@ -7,5 +7,5 @@
         <input type="hidden" name="page" value="{{ page }}">
     {% endif %}
     {# Button #}
-    <button type="button" hx-ws="send" hx-trigger="click">{{ text }}</button>
+    <button class="link__button" type="button" hx-ws="send" hx-trigger="click">{{ text }}</button>
 </form>

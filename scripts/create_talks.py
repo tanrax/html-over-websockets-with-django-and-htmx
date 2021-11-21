@@ -17,7 +17,7 @@ def run():
         my_talk = Talk(
             title=title,
             category=Category.objects.order_by("?")[0],
-            author=Profile.objects.order_by("?")[0],
+            speaker=Profile.objects.order_by("?")[0],
             is_draft=False,
             content=fake.paragraph(nb_sentences=randint(20, 100)),
         )

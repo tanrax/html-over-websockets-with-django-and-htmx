@@ -41,15 +41,15 @@ class Talk(models.Model):
         Category,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="Categoría",
+        related_name="talkcategory",
         verbose_name="Categoría",
     )
-    author = models.ForeignKey(
+    speaker = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="talk_profile",
-        verbose_name="Autor",
+        related_name="talkspeaker",
+        verbose_name="Ponente",
     )
     image = models.ImageField(verbose_name="Imagen", upload_to="uploads/talks/")
     is_draft = models.BooleanField(default=True, verbose_name="¿Es un borrador?")
