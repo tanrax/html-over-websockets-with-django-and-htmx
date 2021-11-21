@@ -6,6 +6,9 @@
     {% if page %}
         <input type="hidden" name="page" value="{{ page }}">
     {% endif %}
+    {% if id %}
+        <input type="hidden" name="id" value="{{ id }}">
+    {% endif %}
     {# Button #}
-    <button class="link__button" type="button" hx-ws="send" hx-trigger="click">{{ text }}</button>
+    <a class="link__button" type="button" hx-ws="send" hx-trigger="click">{{ children }}</a>
 </form>

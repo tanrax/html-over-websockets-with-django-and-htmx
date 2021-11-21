@@ -50,10 +50,11 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
             # Single talk
             if data["value"] == "single-talk":
                 await self.channel_layer.group_send(
-                    self.room_group_name, {
+                    self.room_group_name,
+                    {
                         "type": "send_page_single_talk",
-                        "id":  data["id"],
-                    }
+                        "id": data["id"],
+                    },
                 )
             # Profiles
             if data["value"] == "profiles":
@@ -70,10 +71,11 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
             # Search
             if data["value"] == "search-talks":
                 await self.channel_layer.group_send(
-                    self.room_group_name, {
+                    self.room_group_name,
+                    {
                         "type": "send_page_search",
                         "search": data["search"],
-                    }
+                    },
                 )
 
     # Pages

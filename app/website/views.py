@@ -40,11 +40,15 @@ def page_single_talk(id):
         },
     )
 
+
 def page_profiles():
     return render_to_string(
         "pages/profiles.html",
         {
-            "profiles": Profile.objects.filter(talkspeaker__isnull=False).order_by("full_name").distinct().all(),
+            "profiles": Profile.objects.filter(talkspeaker__isnull=False)
+            .order_by("full_name")
+            .distinct()
+            .all(),
         },
     )
 
@@ -57,9 +61,9 @@ def page_results(search):
     return render_to_string(
         "pages/talks.html",
         {
-            "talks": Talk.objects.filter(
-                title__icontains=search.lower()
-                                         ).order_by("title"),
+            "talks": Talk.objects.filter(title__icontains=search.lower()).order_by(
+                "title"
+            ),
             "search": search,
         },
     )

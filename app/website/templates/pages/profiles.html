@@ -1,4 +1,5 @@
 {% load static %}
+{% load slippers %}
 <main id="main" data-scroll-to-top="true">
     {# List Profiles #}
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
@@ -9,14 +10,15 @@
                           {{ profile.full_name }}
                     </h2>
                     <p>
-                        {# <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}"> #}
+                        <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}">
                     </p>
                 </header>
                 <h3>Talks</h3>
                 <ul>
                     {% for talk in profile.talkspeaker.all %}
                         <li>
-                            {{ talk.title }}
+
+                            {% #link action="page" value="single-talk" id=talk.id scroll-up="true" %}{{ talk.title }}{% /link %}
                         </li>
                     {% endfor %}
                 </ul>

@@ -23,10 +23,7 @@
     {% if talks %}
         {% for talk in talks %}
             <form>
-                <input type="hidden" name="action" value="page">
-                <input type="hidden" name="value" value="single-talk">
-                <input type="hidden" name="id" value="{{ talk.id }}">
-                <a href="#" hx-ws="send" hx-trigger="click">
+                {% #link action="page" value="single-talk" id=talk.id %}
                     <article>
                         <header>
                             <div class="grid">
@@ -41,7 +38,7 @@
                         </p>
                         <footer>Author {{ talk.author.full_name }} - {{ talk.category.name }}</footer>
                     </article>
-                </a>
+                {% /link %}
             </form>
         {% endfor %}
     {% else %}
