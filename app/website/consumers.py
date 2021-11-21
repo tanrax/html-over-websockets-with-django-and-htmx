@@ -62,6 +62,14 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
                     self.room_group_name, {"type": "send_page_profiles"}
                 )
 
+            # Chat
+            if data["value"] == "chat":
+                await self.channel_layer.group_send(
+                    self.room_group_name, {
+                        "type": "send_page_chat",
+                    }
+                )
+
             # About
             if data["value"] == "about":
                 await self.channel_layer.group_send(
@@ -102,6 +110,14 @@ class WebsiteConsumer(AsyncWebsocketConsumer):
     async def send_page_profiles(self, event):
         """Send Profiles page"""
         html = await sync_to_async(self._get_profiles)()
+        await self.send(text_data=html)
+
+    def _get_chat(self):
+        return page_chat()
+
+    async def send_page_chat(self, event):
+        """Send Chat page"""
+        html = await sync_to_async(self._get_chat)()
         await self.send(text_data=html)
 
     def _get_about(self):
