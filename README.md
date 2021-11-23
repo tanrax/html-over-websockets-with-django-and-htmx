@@ -7,3 +7,9 @@ You need `docker` and `docker-compose`.
 ```
 make run.server
 ```
+
+Optional: Load fake data.
+
+```
+run.loaddata
+```
