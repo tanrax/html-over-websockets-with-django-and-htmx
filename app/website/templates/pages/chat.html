@@ -1,3 +1,63 @@
-<main id="main" data-scroll-to-top="true">
-    soy el chat
-</main>
+{% load slippers %}
+<div id="chat" data-scroll-to-top="false">
+    <style>
+        #chat {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 17rem;
+            height: 35rem;
+            border: 1px solid;
+            padding: 1rem;
+            background-color: var(--background-color);
+            margin: 0;
+            transition: .5s
+        }
+
+        .hidden {
+            left: -17rem !important;
+        }
+
+        .messages {
+            height: 10rem;
+            overflow-y: scroll;
+            border: 1px solid;
+        }
+
+    </style>
+    <h1>Chat</h1>
+    <div class="messages" data-scroll-to-bottom="true">
+        <table>
+          <tbody>
+          {% for message in messages %}
+            <tr>
+              <th>{{ message.username }}</th>
+              <td>{{ message.text }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <form>
+        <input type="hidden" name="action" value="new-message">
+        <label>
+            <span>Username:</span>
+            <input
+                    id="new-username"
+                    type="text"
+                    name="new-username"
+                    value=""
+            >
+        </label>
+        <label>
+            <span>Message:</span>
+            <input
+                    id="new-text"
+                    type="text"
+                    name="new-text"
+                    value=""
+            >
+        </label>
+        <input type="button" hx-ws="send" hx-trigger="click" value="Send">
+    </form>
+</div>

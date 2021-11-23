@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from random import randint
 from django.conf import settings
-from .models import Talk, Profile
+from .models import Talk, Profile, Message
 from asgiref.sync import sync_to_async
 
 
@@ -65,5 +65,14 @@ def page_results(search):
                 "title"
             ),
             "search": search,
+        },
+    )
+
+
+def page_chat():
+    return render_to_string(
+        "pages/chat.html",
+        {
+            "messages": Message.objects.order_by("created_at").all(),
         },
     )

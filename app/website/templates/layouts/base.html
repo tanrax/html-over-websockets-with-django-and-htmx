@@ -38,7 +38,7 @@
                   </li>
                   <li>
                       {# To page Chat #}
-                      {% #link action="page" value="chat" scroll-up="true" %}Chat{% /link %}
+                      <a href="#" onclick="document.querySelector('#chat').classList.toggle('hidden')">Chat</a>
                   </li>
                   <li>
                       {# To page About #}
@@ -49,5 +49,8 @@
         </header>
         <main id="main"></main>
     </div>
+    <section hx-ws="connect:ws:{{ DOMAIN }}/ws/chat/">
+        <div id="chat" class="hidden"></div>
+    </section>
 </body>
 </html>

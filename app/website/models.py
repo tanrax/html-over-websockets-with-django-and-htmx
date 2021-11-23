@@ -75,3 +75,18 @@ class Talk(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Message(models.Model):
+
+    username = models.CharField(max_length=100, verbose_name="Alias", default="")
+    text = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+        verbose_name = "Message"
+        verbose_name_plural = "Messages"
+
+    def __str__(self):
+        return self.text[:10] + "..."
